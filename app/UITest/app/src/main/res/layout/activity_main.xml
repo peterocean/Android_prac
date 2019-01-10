@@ -24,4 +24,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/android8_oreo"/>
+
+    <ProgressBar
+        android:id="@+id/process_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.ProgressBar.Inverse"
+        android:max="100"
+        android:outlineSpotShadowColor="@color/colorPrimary"/>
+
+
 </LinearLayout>
