@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.litepal.LitePal;
+
 import java.io.DataOutput;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,14 +29,16 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_EXTERNAL_STORAGE);
             return;
         }
-        myDatabaseHelper = new MyDatabaseHelper(this,"/sdcard/Android/data/BookStore.db",null,8);
+
         Button button = (Button)findViewById(R.id.create_book);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myDatabaseHelper.getWritableDatabase();
+                LitePal.getDatabase();
+                Toast.makeText(MainActivity.this,"table Book create succeded",Toast.LENGTH_SHORT).show();
             }
         });
+
         Button addDataButton = (Button)findViewById(R.id.add_data);
         addDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
