@@ -13,8 +13,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
 
 import java.io.DataOutput;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,21 +68,13 @@ public class MainActivity extends AppCompatActivity {
         queryDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SQLiteDatabase db = myDatabaseHelper.getWritableDatabase();
-                Cursor cursor = db.query("Book",null,null,null,null,null,null);
-                if (cursor.moveToFirst()) {
-                    do {
-                        String name = cursor.getString(cursor.getColumnIndex("name"));
-                        String author = cursor.getString(cursor.getColumnIndex("author"));
-                        int pages = cursor.getInt(cursor.getColumnIndex("pages"));
-                        double price = cursor.getDouble(cursor.getColumnIndex("price"));
-                        Log.d("MainActivity","book name is " + name );
-                        Log.d("MainActivity","book author is " + author );
-                        Log.d("MainActivity","book pages is " + pages );
-                        Log.d("MainActivity","book price is " + price );
-                    } while (cursor.moveToNext());
+                List<Book> books = LitePal.findAll(Book.class);
+                for (Book book: books) {
+                    Log.d("MainActivity","book name is " + book.getName() );
+                    Log.d("MainActivity","book author is " + book.getAuthor() );
+                    Log.d("MainActivity","book pages is " + book.getPages() );
+                    Log.d("MainActivity","book price is " + book.getPress() );
                 }
-                cursor.close();
             }
         });
     }
