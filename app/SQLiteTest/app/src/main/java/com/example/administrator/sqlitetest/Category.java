@@ -1,6 +1,8 @@
 package com.example.administrator.sqlitetest;
 
-public class Category {
+import org.litepal.crud.LitePalSupport;
+
+public class Category extends LitePalSupport {
     private  int id;
     private String categoryName;
 

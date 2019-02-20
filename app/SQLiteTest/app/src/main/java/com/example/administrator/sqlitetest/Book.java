@@ -1,12 +1,16 @@
 package com.example.administrator.sqlitetest;
 
-public class Book {
+import org.litepal.crud.LitePalSupport;
+import org.litepal.exceptions.DataSupportException;
+
+public class Book extends LitePalSupport {
     private  int id;
     private String author;
     private double price;
     private int pages;
     private String name;
     private String press;
+
 
     public int getId() {
         return  id;

@@ -43,37 +43,22 @@ public class MainActivity extends AppCompatActivity {
         addDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SQLiteDatabase db = myDatabaseHelper.getWritableDatabase();
-                ContentValues values = new ContentValues();
-                values.put("name","The Da vinci Code");
-                values.put("author","Dan Brown");
-                values.put("pages",454);
-                values.put("price",16.96);
-                db.insert("Book",null,values);
-                values.clear();
-
-                values.put("name","The Lost Symbol");
-                values.put("author","Dan Brown");
-                values.put("pages",500);
-                values.put("price",19.95);
-                db.insert("Book",null,values);
-                Toast.makeText(MainActivity.this,"Book insert succeded",Toast.LENGTH_SHORT).show();
+                Book book = new Book();
+                book.setName("The Lost Symbol");
+                book.setAuthor("Dan Brown");
+                book.setPages(510);
+                book.setPrice(19.95);
+                book.setPress("Unkonw");
+                book.save();
             }
         });
         Button updateDataButton = (Button)findViewById(R.id.update_data);
         updateDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SQLiteDatabase db = myDatabaseHelper.getWritableDatabase();
-
-                ContentValues values2 = new ContentValues();
-                values2.put("name","The Da Vinci Code");
-                db.update("book", values2, "name = ?", new String[]{"The Da vinci Code"});
-                Toast.makeText(MainActivity.this,"Book update succeded",Toast.LENGTH_SHORT).show();
-
-                ContentValues values = new ContentValues();
-                values.put("price",10.99);
-                db.update("Book",values,"name = ?", new String[]{"The Da Vinci Code"});
+               Book bookUpdate = LitePal.find(Book.class,1);
+               bookUpdate.setPrice(10.99);
+               bookUpdate.save();
             }
         });
 
