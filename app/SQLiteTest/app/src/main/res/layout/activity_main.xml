@@ -22,5 +22,10 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:text="update_data"/>
+   <Button
+       android:id="@+id/qurey_data"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="query_data"/>
 
 </LinearLayout>
