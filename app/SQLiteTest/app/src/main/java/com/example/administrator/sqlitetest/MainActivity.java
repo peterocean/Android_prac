@@ -1,12 +1,16 @@
 package com.example.administrator.sqlitetest;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.io.DataOutput;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,12 +25,49 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_EXTERNAL_STORAGE);
             return;
         }
-        myDatabaseHelper = new MyDatabaseHelper(this,"/sdcard/Android/data/BookStore.db",null,1);
+        myDatabaseHelper = new MyDatabaseHelper(this,"/sdcard/Android/data/BookStore.db",null,8);
         Button button = (Button)findViewById(R.id.create_book);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myDatabaseHelper.getWritableDatabase();
+            }
+        });
+        Button addDataButton = (Button)findViewById(R.id.add_data);
+        addDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SQLiteDatabase db = myDatabaseHelper.getWritableDatabase();
+                ContentValues values = new ContentValues();
+                values.put("name","The Da vinci Code");
+                values.put("author","Dan Brown");
+                values.put("pages",454);
+                values.put("price",16.96);
+                db.insert("Book",null,values);
+                values.clear();
+
+                values.put("name","The Lost Symbol");
+                values.put("author","Dan Brown");
+                values.put("pages",500);
+                values.put("price",19.95);
+                db.insert("Book",null,values);
+                Toast.makeText(MainActivity.this,"Book insert succeded",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button updateDataButton = (Button)findViewById(R.id.update_data);
+        updateDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SQLiteDatabase db = myDatabaseHelper.getWritableDatabase();
+
+                ContentValues values2 = new ContentValues();
+                values2.put("name","The Da Vinci Code");
+                db.update("book", values2, "name = ?", new String[]{"The Da vinci Code"});
+                Toast.makeText(MainActivity.this,"Book update succeded",Toast.LENGTH_SHORT).show();
+
+                ContentValues values = new ContentValues();
+                values.put("price",10.99);
+                db.update("Book",values,"name = ?", new String[]{"The Da Vinci Code"});
             }
         });
     }
